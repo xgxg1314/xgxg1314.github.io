@@ -185,7 +185,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-21 07:59:25" itemprop="dateModified" datetime="2021-06-21T07:59:25+08:00">2021-06-21</time>
+        <time title="Modified: 2021-06-21 21:28:38" itemprop="dateModified" datetime="2021-06-21T21:28:38+08:00">2021-06-21</time>
       </span>
 
   
@@ -198,29 +198,34 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="测试一下表格"><a href="#测试一下表格" class="headerlink" title="测试一下表格"></a>测试一下表格</h1><table>
+          <h1 id="测试一下表格"><a href="#测试一下表格" class="headerlink" title="测试一下表格"></a>测试一下表格</h1><div class="table-container">
+<table>
 <thead>
 <tr>
-<th align="left">左对齐</th>
-<th align="right">右对齐</th>
-<th align="center">居中对齐</th>
+<th style="text-align:left">左对齐</th>
+<th style="text-align:right">右对齐</th>
+<th style="text-align:center">居中对齐</th>
 </tr>
 </thead>
-<tbody><tr>
-<td align="left">单元格</td>
-<td align="right">单元格</td>
-<td align="center">单元格</td>
+<tbody>
+<tr>
+<td style="text-align:left">单元格</td>
+<td style="text-align:right">单元格</td>
+<td style="text-align:center">单元格</td>
 </tr>
 <tr>
-<td align="left">单元格</td>
-<td align="right">单元格</td>
-<td align="center">单元格</td>
+<td style="text-align:left">单元格</td>
+<td style="text-align:right">单元格</td>
+<td style="text-align:center">单元格</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <h1 id="测试一下超链接"><a href="#测试一下超链接" class="headerlink" title="测试一下超链接"></a>测试一下超链接</h1><ul>
 <li><a target="_blank" rel="noopener" href="https://www.runoob.com/markdown/md-table.html">课程主页</a></li>
 </ul>
 <h1 id="测试一下公式"><a href="#测试一下公式" class="headerlink" title="测试一下公式"></a>测试一下公式</h1><p>公式目前好像不支持啊！！！</p>
+<h1 id="测试一下渲染器"><a href="#测试一下渲染器" class="headerlink" title="测试一下渲染器"></a>测试一下渲染器</h1><p>不知道使用什么渲染器了</p>
 
       
     </div>
@@ -417,10 +422,9 @@
 <h1 id="测试中文"><a href="#测试中文" class="headerlink" title="测试中文"></a>测试中文</h1><p>效果还不错</p>
 <h2 id="第一次测试"><a href="#第一次测试" class="headerlink" title="第一次测试"></a>第一次测试</h2><p>可以一键把博客内容上传到服务器上，非常方便</p>
 <p>但是缺点是，上传的网络不稳定，经常会上传失败</p>
-<h2 id="记住–不要用记事本打开配置文件–核心就是utf-8格式不能变化"><a href="#记住–不要用记事本打开配置文件–核心就是utf-8格式不能变化" class="headerlink" title="记住–不要用记事本打开配置文件–核心就是utf-8格式不能变化"></a>记住–不要用记事本打开配置文件–核心就是utf-8格式不能变化</h2><p>用sublime编辑器不会出问题</p>
+<h2 id="记住—不要用记事本打开配置文件—核心就是utf-8格式不能变化"><a href="#记住—不要用记事本打开配置文件—核心就是utf-8格式不能变化" class="headerlink" title="记住—不要用记事本打开配置文件—核心就是utf-8格式不能变化"></a>记住—不要用记事本打开配置文件—核心就是utf-8格式不能变化</h2><p>用sublime编辑器不会出问题</p>
 <p>$a^2 = b^2 + c^2$</p>
-<p>$$S_n = \frac{X_1 + X_2 + \cdots + X_n}{n} = \frac{1}{n}\sum_{i}^{n} X_i$$</p>
-<h1 id="网络有问题真是烦"><a href="#网络有问题真是烦" class="headerlink" title="网络有问题真是烦"></a>网络有问题真是烦</h1>
+<script type="math/tex; mode=display">S_n = \frac{X_1 + X_2 + \cdots + X_n}{n} = \frac{1}{n}\sum_{i}^{n} X_i</script><h1 id="网络有问题真是烦"><a href="#网络有问题真是烦" class="headerlink" title="网络有问题真是烦"></a>网络有问题真是烦</h1>
       
     </div>
 
@@ -489,16 +493,12 @@
 <h2 id="第一次测试"><a href="#第一次测试" class="headerlink" title="第一次测试"></a>第一次测试</h2><p>可以一键把博客内容上传到服务器上，非常方便</p>
 <p>但是缺点是，上传的网络不稳定，经常会上传失败</p>
 <h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
 <h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
 <h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
 <p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
 
       
