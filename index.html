@@ -115,9 +115,13 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">posts</span>
         </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">tags</span>
       </div>
   </nav>
 </div>
@@ -154,7 +158,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xgxg1314.github.io/2021/06/25/hexo-photo/">
+    <link itemprop="mainEntityOfPage" href="https://xgxg1314.github.io/2021/06/26/paper1-PDEFIND/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -167,7 +171,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/25/hexo-photo/" class="post-title-link" itemprop="url">hexo-photo</a>
+          <a href="/2021/06/26/paper1-PDEFIND/" class="post-title-link" itemprop="url">论文笔记01-Data-driven discovery of partial differential equations</a>
         </h2>
 
         <div class="post-meta-container">
@@ -179,7 +183,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2021-06-25 15:00:16 / Modified: 15:03:49" itemprop="dateCreated datePublished" datetime="2021-06-25T15:00:16+08:00">2021-06-25</time>
+      <time title="Created: 2021-06-26 15:06:25 / Modified: 14:57:39" itemprop="dateCreated datePublished" datetime="2021-06-26T15:06:25+08:00">2021-06-26</time>
     </span>
 
   
@@ -192,77 +196,58 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          
-      
-    </div>
+          <h1 id="paper：Data-driven-discovery-of-partial-differential-equations"><a href="#paper：Data-driven-discovery-of-partial-differential-equations" class="headerlink" title="paper：Data-driven discovery of partial differential equations"></a>paper：Data-driven discovery of partial differential equations</h1><ul>
+<li>作者：Samuel H. Rudy</li>
+<li>导师：Steven L. Brunton , Joshua L. Proctor , J. Nathan Kutz</li>
+<li>单位：华盛顿大学应用数学系</li>
+<li>期刊: Science Advance</li>
+<li>时间：2017</li>
+</ul>
+<h1 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h1><p>本补充文件详细描述了用于从空间域上收集的时间序列数据中发现支配偏微分方程的方法和算法。用于动态系统的数据驱动发现的方法[13]包括无方程建模[21]、人工神经网络[19]、非线性回归[45]、经验动态建模[39、47]、对紧急行为建模[35]、以及动力学的自动推理[38、14、15]。其他数据驱动的方法包括气候中的范式识别[26]、非线性拉普拉斯谱分析[18]、紧急行为建模[35]、库普曼分析[28，9，29，5]和动力学的自动推断[38，14，15]；参考文献[14]提供了极好的评论。利用符号回归和进化算法的开创性贡献[3，37]能够直接从数据中确定非线性动力系统。最近，稀疏性[41]已被用来以高效的计算方式稳健地确定控制动力系统[6，27]。进化[37]和稀疏[6]符号回归方法都通过选择简约模型来避免过度拟合，这些简约模型通过帕累托分析平衡了模型的准确性和复杂性。更广泛地说，稀疏性最近被用于动态系统的数据驱动发现[46，36，32，25，8，34，1，6，42]。</p>
+<h1 id="PDE-FIND"><a href="#PDE-FIND" class="headerlink" title="PDE-FIND"></a>PDE-FIND</h1><p>​    本文讨论的PDE-Find算法是一种寻找离散化数据集的控制方程的方法，我们假设它是以下形式的PDE的解：</p>
+<script type="math/tex; mode=display">
+u_{t}=N\left(u, u_{x}, u_{x x}, \ldots, x, t, \mu\right)</script><p>​    其中，下标表示部分微分，µ表示系统中的参数。假设函数N可以表示为少量项的和，这对于这里考虑的和/或在实践中广泛使用的偏微分方程肯定是这种情况。我们将U表示为包含u的值的矩阵，将q表示为包含可能相关的附加信息的矩阵，例如对|u|的绝对值的依赖性，或与u交互的另一时变函数。</p>
+<p>​    虽然PDE-FIND对N中候选项的函数形式没有限制，但多项式非线性在这项工作中的许多例子中以及在许多数学物理的规范模型中都是常见的。我们也可以考虑高维空间域上的数据，在这种情况下，我们简单地允许关于每个空间维度的导数；Ux、Uy、Uxy、U2xuyy等等。</p>
+<p>​    PDE-Find创建可能出现在N中的大量候选术语库，包括非线性和偏导数，然后从该列表中选择活动术语的稀疏子集。一般来说，我们总是假设复值函数的时间演化可能取决于它的大小。<strong>第一步是获取数据关于时间和每个空间维度的导数</strong>。对于干净的数据，或者使用有限差分来求导数，或者当添加噪声时，使用多项式内插来求导数。然后将导数和函数本身组合成矩阵Θ(U，Q)：</p>
+<script type="math/tex; mode=display">
+\Theta(\mathbf{U}, \mathbf{Q})=\left[\begin{array}{llllllllll}
+1 & \mathbf{U} & \mathbf{U}^{2} & \ldots & \mathbf{Q} & \ldots & \mathbf{U}_{x} & \mathbf{U} \mathbf{U}_{x} & \ldots & \mathbf{Q}^{2} \mathbf{U}^{3} \mathbf{U}_{x x x}
+\end{array}\right]</script><p>Θ的每一列都包含收集数据的所有网格点上特定候选函数的所有值。因此，如果我们在n×m网格上有数据。比如256*100表示在100个时间点的256个空间测量值。并且在偏微分方程中有50个候选项，然后是Θ∈C256·100×50。我们还使用时间导数来计算UT，并将其重塑为列向量，就像我们对Θ的列所做的那样。这给出了一个表示我们的PDE的线性方程：</p>
+<script type="math/tex; mode=display">
+\mathbf{U}_{t}=\Theta(\mathbf{U}, \mathbf{Q}) \xi</script><script type="math/tex; mode=display">
+\left[\begin{array}{c}
+u_{t}\left(x_{0}, t_{0}\right) \\
+u_{t}\left(x_{1}, t_{0}\right) \\
+u_{t}\left(x_{2}, t_{0}\right) \\
+\vdots \\
+u_{t}\left(x_{n-1}, t_{m}\right) \\
+u_{t}\left(x_{n}, t_{m}\right)
+\end{array}\right]=\left[\begin{array}{ccccc}
+1 & u\left(x_{0}, t_{0}\right) & u_{x}\left(x_{0}, t_{0}\right) & \ldots & u^{5} u_{x x x}\left(x_{0}, t_{0}\right) \\
+1 & u\left(x_{1}, t_{0}\right) & u_{x}\left(x_{1}, t_{0}\right) & \ldots & u^{5} u_{x x x}\left(x_{1}, t_{0}\right) \\
+1 & u\left(x_{2}, t_{0}\right) & u_{x}\left(x_{2}, t_{0}\right) & \ldots & u^{5} u_{x x x}\left(x_{2}, t_{0}\right) \\
+\vdots & \vdots & \vdots & \ddots & \vdots \\
+1 & u\left(x_{n-1}, t_{m}\right) & u_{x}\left(x_{n-1}, t_{m}\right) & \ldots & u^{5} u_{x x x}\left(x_{n-1}, t_{m}\right) \\
+1 & u\left(x_{n}, t_{m}\right) & u_{x}\left(x_{n}, t_{m}\right) & \ldots & u^{5} u_{x x x}\left(x_{n}, t_{m}\right)
+\end{array}\right][\xi]</script><p>​    请注意，如果我们假设Θ是一个过完整的库，这意味着Θ有足够丰富的列空间，动态将在它的范围内，那么它应该由Eq很好地表示。(3A)具有稀疏系数向量ξ。这相当于选择足够多的候选函数，从而可以将整个PDE写成加权和。这个线性系统的每一行代表在特定的时间点和空间点的动态观测。</p>
+<script type="math/tex; mode=display">
+u_{t}(x, y)=\sum_{j} \Theta_{j}(u(x, t), q(x, t)) \xi_{j}</script><p>​    对于动力学的无偏表示，我们只需解决ξ的最小二乘问题。然而，即使唯一的误差来自于数值舍入，最小二乘解也可能是不准确的。具体地说，ξ将具有主要的非零值，表示库中包含的每种函数形式的偏微分方程。最重要的是，对于类似(4)的回归问题，最小二乘问题的条件很差。在反演Θ时，计算导数的误差(已经是一个有噪声的病态问题)将被数值误差放大。此外，测量误差也会影响最小二乘解。因此，如果使用最小二乘法，它可以从根本上改变所推断的动力学的定性性质。取而代之的是，我们使用稀疏回归来近似解决</p>
+<script type="math/tex; mode=display">
+\xi=\arg \min _{\hat{\xi}}\left\|\Theta \hat{\xi}-\mathbf{U}_{t}\right\|_{2}^{2}+\lambda\|\hat{\xi}\|_{0}</script><p>​    这确保了只有当它们对误差kΘˆξ−Utk的影响大于它们对kˆξk0的加法时，项才会出现在导出的偏微分方程中。‘L0项使这个问题成为NP-困难的。在下一节中，我们讨论逼近方程解的方法。(5)。</p>
+<h2 id="Sparse-Regression-for-PDE-FIND"><a href="#Sparse-Regression-for-PDE-FIND" class="headerlink" title="Sparse Regression for PDE-FIND"></a>Sparse Regression for PDE-FIND</h2><p>​    (6)中‘0优化问题的凸松弛是：</p>
+<script type="math/tex; mode=display">
+\xi=\operatorname{argmin}_{\hat{\xi}}\left\|\boldsymbol{\Theta} \hat{\xi}-\mathbf{U}_{t}\right\|_{2}^{2}+\lambda\|\hat{\xi}\|_{1}</script><p>​    我们最初利用最小绝对收缩和选择算子(LASSO)来解决PDE-FIND[41]定义的凸优化问题。然而，<strong>当数据矩阵Θ在列之间具有高度相关性时，lasso往往很难找到稀疏基</strong>，这在我们的许多例子中就是如此[49]。</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+\hat{\xi} &=\operatorname{argmin}_{\xi}\left\|\Theta \xi-\mathbf{U}_{t}\right\|_{2}^{2}+\lambda\|\xi\|_{2}^{2} \\
+&=\left(\Theta^{T} \Theta+\lambda I\right)^{-1} \Theta^{T} \mathbf{U}_{t}
+\end{aligned}</script><p>​    在算法1中，我们用岭回归代替最小二乘法，并将其称为顺序阈值岭回归(STRIDGE)。请注意，对于λ=0，这将退化为STLS。在本文测试的所有稀疏回归算法中，STRidge的PDE-find的经验性能最好。</p>
+<p>​    由于阈值容差的每个值在最终解中都会给出不同程度的稀疏性，所以我们还使用了单独的方法来寻找最佳容差。预报员在不同的容差下接受训练，他们在测试集合上的表现(考虑到‘0惩罚)被用来寻找最佳容差。我们<strong>将L0惩罚设置为与Θ的条件数成正比</strong>，在<strong>高度相关和病态数据</strong>的情况下执行稀疏性。基于经验证据，使用了10−3的乘数。算法2概述了我们搜索最优公差的方法。</p>
+<p>​    作为预处理步骤，将Θ的每列归一化为单位方差。如果函数不是大致为O(1)，因此更高的幂不是很大就是很小，这一点尤其有用。在本文给出的所有例子中，<strong>Θ列在求解系数的稀疏向量ξ之前被归一化到单位长度</strong>。通过将非归一化数据回归到识别项上来获得ξ的最终预测。在没有进行归一化的情况下，这种方法不如STRidge成功的唯一实例是从有偏的随机游动中识别平流扩散方程。</p>
+<p><img src="/2021/06/26/paper1-PDEFIND/image-20210626145242638.png" alt="image-20210626145242638"></p>
+<p><img src="/2021/06/26/paper1-PDEFIND/image-20210626145513561.png" alt="image-20210626145513561"></p>
+<p>存在其他几种方法来寻找最小二乘问题的稀疏解。<strong>贪婪算法已被证明在包括PDE-Find在内的稀疏优化问题上表现出良好的性能</strong>，但在某些情况下不如STRidge[48]可靠。虽然<strong>带归一化的STRidge</strong>在我们测试的几乎所有例子上都工作得很好(平流扩散是个例外)，但我们不能断言它是最优的。<strong>特别是，我们没有测试弹性网络算法的性能，它已经被证明比Lasso[49]更有优势</strong>。如果关于PDE的附加信息是已知的，例如，如果我们知道其中一个项是非零的，则这可以合并到对系数的惩罚中。</p>
 
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xgxg1314.github.io/2021/06/24/lecture-series-June/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xiongxiong">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/24/lecture-series-June/" class="post-title-link" itemprop="url">lecture-series-June</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-06-24 19:25:05" itemprop="dateCreated datePublished" datetime="2021-06-24T19:25:05+08:00">2021-06-24</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-25 14:43:28" itemprop="dateModified" datetime="2021-06-25T14:43:28+08:00">2021-06-25</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="测试图片显示"><a href="#测试图片显示" class="headerlink" title="测试图片显示"></a>测试图片显示</h1>
       
     </div>
 
@@ -319,7 +304,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-26 12:58:31" itemprop="dateModified" datetime="2021-06-26T12:58:31+08:00">2021-06-26</time>
+        <time title="Modified: 2021-06-26 13:10:44" itemprop="dateModified" datetime="2021-06-26T13:10:44+08:00">2021-06-26</time>
       </span>
 
   
@@ -458,82 +443,6 @@ u_{t}=N\left(u, u_{x}, u_{x x}, \ldots, x, t, \mu\right)</script><p>\begin{equat
 <h2 id="测试一下高亮颜色显示和加粗显示"><a href="#测试一下高亮颜色显示和加粗显示" class="headerlink" title="测试一下高亮颜色显示和加粗显示"></a>测试一下高亮颜色显示和加粗显示</h2><p>==<strong>第一步是获取数据关于时间和每个空间维度的导数</strong>==</p>
 <p><strong>第一步是获取数据关于时间和每个空间维度的导数</strong></p>
 <h2 id="测试一下python等代码行"><a href="#测试一下python等代码行" class="headerlink" title="测试一下python等代码行"></a>测试一下python等代码行</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://xgxg1314.github.io/2021/06/14/my-first-blog/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="xiongxiong">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2021/06/14/my-first-blog/" class="post-title-link" itemprop="url">my fisrt blog</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2021-06-14 22:44:31" itemprop="dateCreated datePublished" datetime="2021-06-14T22:44:31+08:00">2021-06-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-25 11:49:54" itemprop="dateModified" datetime="2021-06-25T11:49:54+08:00">2021-06-25</time>
-      </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>!</p>
-<h1 id="测试中文"><a href="#测试中文" class="headerlink" title="测试中文"></a>测试中文</h1><p>效果还不错</p>
-<h2 id="第一次测试"><a href="#第一次测试" class="headerlink" title="第一次测试"></a>第一次测试</h2><p>可以一键把博客内容上传到服务器上，非常方便</p>
-<p>但是缺点是，上传的网络不稳定，经常会上传失败</p>
-<h2 id="记住—不要用记事本打开配置文件—核心就是utf-8格式不能变化"><a href="#记住—不要用记事本打开配置文件—核心就是utf-8格式不能变化" class="headerlink" title="记住—不要用记事本打开配置文件—核心就是utf-8格式不能变化"></a>记住—不要用记事本打开配置文件—核心就是utf-8格式不能变化</h2><p>用sublime编辑器不会出问题</p>
-<p>$a^2 = b^2 + c^2$</p>
-<script type="math/tex; mode=display">S_n = \frac{X_1 + X_2 + \cdots + X_n}{n} = \frac{1}{n}\sum_{i}^{n} X_i</script><h1 id="网络有问题真是烦"><a href="#网络有问题真是烦" class="headerlink" title="网络有问题真是烦"></a>网络有问题真是烦</h1>
       
     </div>
 
